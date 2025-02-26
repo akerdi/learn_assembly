@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "options": {
+      "cwd": "${workspaceFolder}/01Helloworld"
+  },
+  "tasks": [
+    {
+      "label": "debug", // run with debug
+      "type": "shell",
+      "command": "gdb ./main",
+      "dependsOn": ["debug_build"]
+    },
+    {
+      "label": "debug_build",
+      "type": "shell",
+      "command": "DEBUG=1 make"
+    },
+    {
+        "label": "run", // run without debug
+        "type": "shell",
+        "command": "./main",
+        "dependsOn": ["build"]
+    },
+    {
+        "label": "build", // build without debug
+        "type": "shell",
+        "command": "make"
+    }
+  ]
+}
