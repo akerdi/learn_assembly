@@ -6,7 +6,7 @@ Learn Assembly introduces how to quickly master assembly, at lease knowing how t
 
 ## Run
 
-I work in Windows's WSL ubuntu20.04, download nasm, and Using VSCode(Windows vscode link to ubuntu):
+I work on Windows's WSL ubuntu20.04, download nasm, and Using VSCode(VSCode linking to WSL):
 
 ```
 Platform    : Windows WSL - Ubuntu20.04
