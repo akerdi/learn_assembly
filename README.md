@@ -35,7 +35,8 @@ Run in WSL terminal:
 
 ## List
 
-+ [01Helloworld](./01Helloworld/README.md)
++ [01Helloworld_english](./01Helloworld/README.english.md)
++ [02Basic_Additional_cmn_chn](./02Basic_Additional/README.cmn_chn.md)
 
 ## Ref
 
@@ -48,3 +49,5 @@ Run in WSL terminal:
 [License-us](./License)
 
 [License-zh](./License.zh)
+
+[Assembly-Cheat-Sheat](https://github.com/a7medayman6/Assembly-Cheat-Sheet)
