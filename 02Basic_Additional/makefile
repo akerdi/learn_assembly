@@ -3,21 +3,35 @@ ASM := nasm
 LD := ld
 flags := $(if $(DEBUG),-f elf64 -g -F dwarf,-f elf64)
 
-all: run_add_a_b run_arbitrary_sum_150
+build_dir := build
+src_add_a_b := add_a_b.asm
+obj_add_a_b := ${build_dir}/add_a_b.o
+executable_add_a_b := ${build_dir}/add_a_b
 
-run_add_a_b: build_add_a_b
-	./build/add_a_b
+src_arbitrary_sum_150 := arbitrary_sum_150.asm
+obj_arbitrary_sum_150 := ${build_dir}/arbitrary_sum_150.o
+executable_arbitrary_sum_150 := ${build_dir}/arbitrary_sum_150
 
-build_add_a_b: make_dir
-	$(ASM) $(flags) -o build/add_a_b.o add_a_b.asm
-	$(LD) -o build/add_a_b build/add_a_b.o
+all: make_dir run_add_a_b run_arbitrary_sum_150
+
+run_add_a_b: ${executable_add_a_b}
+	./${executable_add_a_b}
+
+${executable_add_a_b}:
+	$(LD) -o ${executable_add_a_b} ${obj_add_a_b}
+
+${obj_add_a_b}: ${src_add_a_b}
+	$(ASM) $(flags) -o $@ $<
+
+
+run_arbitrary_sum_150: ${executable_arbitrary_sum_150}
+	./${executable_arbitrary_sum_150}
+
+${executable_arbitrary_sum_150}:
+	$(LD) -o ${executable_arbitrary_sum_150} ${obj_arbitrary_sum_150}
+
+${obj_arbitrary_sum_150}: ${src_arbitrary_sum_150}
+	$(ASM) $(flags) -o $@ $<
 
 make_dir:
 	mkdir build -p
-
-run_arbitrary_sum_150: build_arbitrary_sum_150
-	./build/arbitrary_sum_150
-
-build_arbitrary_sum_150: make_dir
-	$(ASM) $(flags) -o build/arbitrary_sum_150.o arbitrary_sum_150.asm
-	$(LD) -o build/arbitrary_sum_150 build/arbitrary_sum_150.o

@@ -84,7 +84,7 @@ rsp00000000000000000000
     # 开始运行
     run
     # 查看普通寄存器
-    info registers # 所有: info all-registers
+    info registers [$rcx] # 所有: info all-registers
     # 反汇编_start
     disas _start # 可以看到每行代码运行地址之后RIP 指向的地址
     disas _add_a_b # 同上, 也可以`disassemble _add_a_b`
