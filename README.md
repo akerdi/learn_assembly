@@ -33,7 +33,7 @@ Run in WSL terminal:
 
 ![01Helloworld](./Assets/01Helloworld01.jpg)
 
-## List
+## Learning List
 
 + [01Helloworld_english](./01Helloworld/README.english.md)
 + [02Basic_Additional_cmn_chn](./02Basic_Additional/README.cmn_chn.md)
