@@ -14,21 +14,21 @@ _start:
 .compare:
     ; compare function
     cmp rax, 150
-    ; if not equal, jump to .exit
-    jne .exit
-    ; else jump to .correctSum
-    jmp .correctSum
+    ; if not equal, jump to exit
+    jne exit
+    ; else jump to correctSum
+    jmp correctSum
 
-.correctSum:
+correctSum:
     mov rax, 1
     mov rdi, 1
     mov rsi, msg
     mov rdx, msg_len
     syscall
 
-    jmp .exit
+    jmp exit
 
-.exit:
+exit:
     mov rax, 60
     mov rdi, 0
     syscall

@@ -35,9 +35,9 @@
 _start:
     pop rcx
     cmp rcx, 3
-    jne .argcError
+    jne argcError
 
-.argcError:
+argcError:
     mov rax, SYS_WRITE
     mov rdi, STD_IN
     mov rsi, WRONG_ARGC
@@ -81,7 +81,7 @@ _start:
     add rsp, 8      ; 跳过调用程序的字符串
 
     pop rsi         ; argv[1]
-    call .str_to_int;
+    call str_to_int;
     mov r10, rax
 ```
 
@@ -91,20 +91,21 @@ _start:
 
 ```asm
 (gdb) disas _start
-0x0000000000401000 <+0>:     pop    %rcx
-0x0000000000401001 <+1>:     cmp    $0x3,%rcx
-0x0000000000401005 <+5>:     jne    0x40108c <_start.argcError>
-0x000000000040100b <+11>:    add    $0x8,%rsp
-0x000000000040100f <+15>:    pop    %rsi
-0x0000000000401010 <+16>:    callq  0x40102c <_start.str_to_int>
-0x0000000000401015 <+21>:    mov    %rax,%r10
-0x0000000000401018 <+24>:    pop    %rsi
-0x0000000000401019 <+25>:    callq  0x40102c <_start.str_to_int>
-0x000000000040101e <+30>:    mov    %rax,%r11
-0x0000000000401021 <+33>:    add    %r11,%r10
-0x0000000000401024 <+36>:    mov    %r10,%rax
-0x0000000000401027 <+39>:    xor    %r12,%r12
-0x000000000040102a <+42>:    jmp    0x40104a <_start.int_to_str>
+Dump of assembler code for function _start:
+=> 0x0000000000401000 <+0>:     pop    %rcx
+   0x0000000000401001 <+1>:     cmp    $0x3,%rcx
+   0x0000000000401005 <+5>:     jne    0x40108c <argcError>
+   0x000000000040100b <+11>:    add    $0x8,%rsp
+   0x000000000040100f <+15>:    pop    %rsi
+   0x0000000000401010 <+16>:    callq  0x40102c <str_to_int>
+   0x0000000000401015 <+21>:    mov    %rax,%r10
+   0x0000000000401018 <+24>:    pop    %rsi
+   0x0000000000401019 <+25>:    callq  0x40102c <str_to_int>
+   0x000000000040101e <+30>:    mov    %rax,%r11
+   0x0000000000401021 <+33>:    add    %r11,%r10
+   0x0000000000401024 <+36>:    mov    %r10,%rax
+   0x0000000000401027 <+39>:    xor    %r12,%r12
+   0x000000000040102a <+42>:    jmp    0x40104a <int_to_str>
 ```
 
 看到`0x401010 <+16>:    callq  0x40102c <_start.str_to_int>` 下一行地址为`0x401015`. 当通过`si` 进入call 的子程序后, 通过`x/1gx $rsp` 看到地址`0x401015`就在其中.
@@ -114,19 +115,19 @@ _start:
 通过读取字符后, 对字符相减'0' 得到数字.
 
 ```asm
-.int_to_str:
+int_to_str:
     mov rax, 0
     mov rcx, 10
 .next:
     cmp [rsi], byte 0
-    je .return_str
+    je return_func
     mov bl, [rsi]           ;|245 -> '2'      |'45' -> bl = '4' |'5' -> bl = '5'    |
     sub bl, '0'             ;|'2' - 48 = 2    |'4' -> bl = 4    |'5' -> bl = 5      |
     mul rcx                 ;|rax = 0 * 10 = 0|rax = 2 * 10 = 20|rax = 24 * 10 = 240|
     add rax, rbx            ;|rax = 0 + 2 = 2 |rax = 20 + 4 = 24|rax = 240 + 5 = 245
     inc rsi                 ;|rsi++ -> '45'   |rsi++ -> '5'     |rsi++ -> 0         |
     jmp .next
-.return_str:
+return_func:
     ret
 ```
 
@@ -138,8 +139,8 @@ _start:
 
     add r10, r11
     mov rax, r10
-    call .int_to_str
-.int_to_str:
+    call int_to_str
+int_to_str:
     mov rdx, 0      ; rdx 保存余数, rax既是被除数也是商
     mov rbx, 10     ; rbx 为除数
     div rbx         ; rax / rbx -> 245 / 10 -> rax = 24, rdx = 5
@@ -148,7 +149,7 @@ _start:
     inc r12         ; r12 为计数器, 每次加1
     cmp rax, 0      ; 如果被除数不为0, 则继续除
     je .print_str
-    jmp .int_to_str
+    jmp int_to_str
 .print_str:
     mov rax, 1
     mul r12         ; rax = rax * r12, 如果r12为3, 则1*3 = 3

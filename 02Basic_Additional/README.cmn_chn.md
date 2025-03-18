@@ -96,3 +96,5 @@ rsp00000000000000000000
     ni # nexti
     # 打印行号20 的内存地址信息
     info line 22 # 或者 info line *0x40102d
+
+> 关于标记(label) 前面是否加`.`(如`.compare` 和`correctSum`): 当为全局函数时, 则不加点, 局部方法时, 则加点. 此时`.compare` 使用 `disas _start` 查看时, 会显示为 `<_start.compare>`, 而`correctSum` 使用 `disas _start` 查看时, 会显示为 `<correctSum>`.
