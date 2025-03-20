@@ -39,6 +39,7 @@ Run in WSL terminal:
 + [02Basic_Additional_cmn_chn](./02Basic_Additional/README.cmn_chn.md)
 + [03Stack_Program_cmn_chn](./03Stack_Program/README.cmn_chn.md)
 + [04Stack_Program_cmn_chn](./04Stack_Program/README.cmn_chn.md)
++ [05Combo_Gcc_cmn_chn](./05Combo_Gcc/README.cmn_chn.md)
 
 ## Ref
 

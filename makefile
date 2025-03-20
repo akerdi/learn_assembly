@@ -3,7 +3,7 @@ target =
 
 .PHONY: all 1 2 3
 
-all: 1 2 3 4
+all: 1 2 3 4 5
 	@echo "Successfully End."
 
 1: build_01
@@ -13,6 +13,8 @@ all: 1 2 3 4
 3: build_03
 	@echo "done run $(target)..."
 4: build_04
+	@echo "done run $(target)..."
+5: build_05
 	@echo "done run $(target)..."
 
 build_01:
@@ -29,4 +31,8 @@ build_03:
 
 build_04:
 	$(eval target=04Stack_Program)
+	cd $(target) && $(MAKE)
+
+build_05:
+	$(eval target=05Combo_Gcc)
 	cd $(target) && $(MAKE)
